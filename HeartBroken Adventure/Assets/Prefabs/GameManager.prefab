@@ -52,8 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e5a2b4a383a844d951396c4f6b5478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Rooms: 0
+  StartingXCoord: 0
+  StartingYCoord: 0
   Width: 10
   Height: 10
+  CorridorLength: 8
   FloorTiles:
   - {fileID: 1761104954843448, guid: 4ec2f7d297f5ac34b80f3a9cfb25e81d, type: 2}
   - {fileID: 1488077385886594, guid: eb0b6b23c7d1d8546bf2d6be861c6d76, type: 2}

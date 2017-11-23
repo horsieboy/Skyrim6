@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DungManager : MonoBehaviour {
 
-#region Variables
+    #region Variables
 
     public class Count
     {
@@ -26,21 +26,32 @@ public class DungManager : MonoBehaviour {
         East, South, West, North
     }
 
-    private Direction direction;
+    [Header("Number of Rooms to Generate")]
+    public int Rooms;
 
+    [Header("Dungeon Parts Parameters")]
     public int StartingXCoord = 0;
     public int StartingYCoord = 0;
     public int Width = 10;
     public int Height = 10;
     public int CorridorLength = 8;
 
+    [Header("Texture Collections")]
     public GameObject[] FloorTiles;
     public GameObject[] WallTiles;
 
+    //Board Stuff
     private Transform DungHolder;
     private List<Vector2> gridPositions = new List<Vector2>();
-    private int CorridorX = 0;
-    private int CorridorY = 0;
+    private int CurrentRoom = 0;
+
+    //Corridor Stuff
+    private int CorridorX;
+    private int CorridorY;
+    private Direction direction;
+    private Direction incomingDirection;
+    // Even needed?
+
     #endregion
 
     void InitializeList()
@@ -68,12 +79,17 @@ public class DungManager : MonoBehaviour {
 
     }
 
-    // out int xEnd, int yEnd
-    void CreateCorridorEntrancePoint(int xBasis, int yBasis, int width , int height )
+    void CreateCorridor(int xBasis, int yBasis, int width , int height )
     {
 
-        direction = Direction.West; //
-            //(Direction)Random.Range(0, 4);
+        direction = (Direction)Random.Range(0, 4);
+
+        if (direction == incomingDirection)
+        {
+            int directionIndex = (int)direction;
+            directionIndex = (directionIndex + 1) % 4;
+            direction = (Direction)directionIndex;
+        }
 
         switch (direction)
         {
@@ -89,9 +105,9 @@ public class DungManager : MonoBehaviour {
                     SpawnObjectAtCoordinates(WallTiles, CorridorX - i, CorridorY - 1);
 
                 }
-                CorridorX -= CorridorLength;
-                //Проверка на существование координаты
-                SpawnObjectAtCoordinates(WallTiles, CorridorX + 1, CorridorY);
+                SpawnObjectAtCoordinates(WallTiles, StartingXCoord, StartingYCoord + 1);
+                StartingXCoord = StartingXCoord - CorridorLength - width + 2;
+
                 break;
                 
             case Direction.North:
@@ -106,11 +122,11 @@ public class DungManager : MonoBehaviour {
                     SpawnObjectAtCoordinates(WallTiles, CorridorX - 1, CorridorY + i);
 
                 }
-                CorridorY += CorridorLength;
+                StartingYCoord = StartingYCoord + CorridorLength + height - 2;
                 break;
 
             case Direction.South:
-                CorridorX = Random.Range(xBasis + 1, xBasis + width - 1);
+                CorridorX = Random.Range(xBasis + 1, xBasis + width - 1) ;
                 CorridorY = yBasis;
                 for (int i = 0; i < CorridorLength; i++)
                 {
@@ -121,6 +137,7 @@ public class DungManager : MonoBehaviour {
                     SpawnObjectAtCoordinates(WallTiles, CorridorX - 1, CorridorY - i);
 
                 }
+                StartingYCoord = StartingYCoord - CorridorLength - height + 2;
                 break;
 
             case Direction.East:
@@ -135,39 +152,42 @@ public class DungManager : MonoBehaviour {
                     SpawnObjectAtCoordinates(WallTiles, CorridorX + i, CorridorY - 1);
 
                 }
+                StartingXCoord = StartingXCoord + CorridorLength + width - 2;
                 break;
 
         }
+                incomingDirection = (Direction)(((int)direction + 2) % 4);
         
     }
 
     void DungeonRoomCreate()
     {
 
-        DungHolder = new GameObject("Dungeon").transform;
 
         int xBasis = StartingXCoord;
+
         int yBasis = StartingYCoord;
 
-        for (int x = xBasis; x < Width; x++)
+        for (int x = 0; x < Width; x++)
         {
-            for (int y = yBasis; y < Height; y++)
+            for (int y = 0; y < Height; y++)
             {
                 GameObject ObjectToSpawn = FloorTiles[Random.Range(0, FloorTiles.Length)];
-                if (x == xBasis || x == Width - 1|| y == yBasis || y == Height - 1)
+                if (x == 0 || x == Width - 1 || y == 0 || y == Height - 1)
                     ObjectToSpawn = WallTiles[Random.Range(0, WallTiles.Length)];
-                
-                GameObject instance = Instantiate(ObjectToSpawn, new Vector2(StartingXCoord + x, StartingYCoord + y), Quaternion.identity) as GameObject;
+
+                GameObject instance = Instantiate(ObjectToSpawn, new Vector2(xBasis + x, yBasis + y), Quaternion.identity) as GameObject;
 
                 instance.transform.SetParent(DungHolder);
-
             }
         }
 
-        CreateCorridorEntrancePoint(xBasis, yBasis, Width, Height);
+        if (CurrentRoom == Rooms)
+            return;
+        CreateCorridor(xBasis, yBasis, Width, Height);
 
-        
     }
+
     #region forgetIt
     Vector2 RandomPosition()
     {
@@ -191,10 +211,17 @@ public class DungManager : MonoBehaviour {
         }
     }
 #endregion
+
     public void SetupScene()
     {
-
+        DungHolder = new GameObject("Dungeon").transform;
+        for (int i = 0; i < Rooms; i++)
+        {
+            CurrentRoom++;
         DungeonRoomCreate();
+        }
+
+
         InitializeList();
     }
 
