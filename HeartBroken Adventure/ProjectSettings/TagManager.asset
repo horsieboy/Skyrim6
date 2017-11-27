@@ -50,6 +50,9 @@ TagManager:
   - name: items
     uniqueID: 682166747
     locked: 0
+  - name: player
+    uniqueID: 3881760899
+    locked: 0
   - name: pick-ups
     uniqueID: 1871935289
     locked: 0
