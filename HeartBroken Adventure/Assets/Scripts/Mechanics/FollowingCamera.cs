@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour {
 
-	public Transform target;
+	private Vector3 playerPosition;
 
 	public float SmoothSpeed = 0.125f;
 
 	public Vector3 offset = new Vector3(0,0,-1);
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
-	
-		Vector3 currentPosition = target.position + offset;
+
+		playerPosition = GameObject.Find ("Player").transform.position;
+
+		Vector3 currentPosition = playerPosition + offset;
 
 		Vector3 smoothedPosition = Vector3.Lerp (transform.position, currentPosition, SmoothSpeed);
 

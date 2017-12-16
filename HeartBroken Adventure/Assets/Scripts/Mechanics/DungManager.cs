@@ -6,7 +6,7 @@ using UnityEngine;
 public class DungManager : MonoBehaviour {
 
     #region Variables
-
+	//Надо заполнить данж мобами и предметами
     enum Direction
     {
         East, South, West, North
@@ -30,6 +30,7 @@ public class DungManager : MonoBehaviour {
 	public GameObject[] PropTiles;
 	public GameObject[] EnemySpawns;
 	public GameObject PlayerSpawn;
+	public Vector2 PlayerSpawnPos;
 	public GameObject CaveEntrance;
 
     //Board Stuff
@@ -44,6 +45,8 @@ public class DungManager : MonoBehaviour {
     private int CorridorY;
     private Direction direction;
     private Direction incomingDirection;
+	private bool IsFirstRoom;
+	private bool IsLastRoom;
 
     #endregion
 
@@ -93,6 +96,8 @@ public class DungManager : MonoBehaviour {
 		foreach (var tile in WallBoard) {
 			SpawnObjectAtCoordinates (WallTiles, tile);
 		}
+		GameObject spawner = Instantiate (PlayerSpawn, PlayerSpawnPos, Quaternion.identity) as GameObject;
+		spawner.transform.SetParent (DungHolder);
 		//instantiate props all over the map
 	}
 
@@ -117,6 +122,8 @@ public class DungManager : MonoBehaviour {
 				}
 			}
 		}
+		if (IsFirstRoom == true)
+			PlayerSpawnPos = GroundBoard[Random.Range (0, GroundBoard.Count)];
 		if (currentRoom == GetRooms)
 			return;
 		CreateVectorTunnel (VectorXbasis, VectorYBasis, Width, Height);
@@ -198,6 +205,10 @@ public class DungManager : MonoBehaviour {
     {
         DungHolder = new GameObject("Dungeon").transform;
 		for (int i = 0; i < GetRooms; i++) {
+			if (i == 0)
+				IsFirstRoom = true;
+			else
+				IsFirstRoom = false;
 			currentRoom++;
 			CreateVectorDungeon();
 		}
