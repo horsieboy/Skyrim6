@@ -74,7 +74,6 @@ GameObject:
   - component: {fileID: 114205195301691762}
   - component: {fileID: 50372963196333392}
   - component: {fileID: 61819354043769554}
-  - component: {fileID: 114946847358954188}
   - component: {fileID: 58181980975911188}
   m_Layer: 0
   m_Name: Sample Enemy
@@ -200,23 +199,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsFacingRight: 0
   MaxHealth:
+    CurrentValue: 0
     StartValue: 100
   Damage:
-    StartValue: 0
+    CurrentValue: 0
+    StartValue: 5
   Defence:
-    StartValue: 0
-  MaxSpeed:
+    CurrentValue: 0
     StartValue: 0
   Agility:
-    StartValue: 0
-  Level:
-    StartValue: 0
-  AttackSpeed:
+    CurrentValue: 0
     StartValue: 0
   CurrentHealth: 100
+  AttackSpeed: 1.5
+  ObjectsToDrop: []
   ShowHealth: {fileID: 0}
   Healthbar: {fileID: 114889048569286232}
-  playerManager: {fileID: 0}
+  playerStats: {fileID: 0}
 --- !u!114 &114304924147544696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -308,33 +307,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114946847358954188
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1486469156398958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d46c0d242f32a4044bdeb171e44381f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsFacingRight: 0
-  MaxHealth:
-    StartValue: 200
-  Damage:
-    StartValue: 0
-  Defence:
-    StartValue: 0
-  MaxSpeed:
-    StartValue: 0
-  Agility:
-    StartValue: 0
-  Level:
-    StartValue: 0
-  AttackSpeed:
-    StartValue: 0
-  CurrentHealth: 200
 --- !u!212 &212637511426770210
 SpriteRenderer:
   m_ObjectHideFlags: 1

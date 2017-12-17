@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4102678397939220}
   - component: {fileID: 212653305553299468}
   - component: {fileID: 61652669178530992}
-  - component: {fileID: 114825156322537154}
   - component: {fileID: 50329005703402624}
+  - component: {fileID: 114825156322537154}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -112,10 +112,7 @@ MonoBehaviour:
   Agility:
     CurrentValue: 0
     StartValue: 0
-  AttackSpeed:
-    CurrentValue: 0
-    StartValue: 0
-  CurrentHealth: 0
+  CurrentHealth: -150
 --- !u!212 &212653305553299468
 SpriteRenderer:
   m_ObjectHideFlags: 1

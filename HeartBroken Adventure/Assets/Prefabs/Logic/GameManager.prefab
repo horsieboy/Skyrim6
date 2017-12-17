@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 114325673909521116}
   - component: {fileID: 114709938935776566}
   - component: {fileID: 114295569737770512}
+  - component: {fileID: 114038708284292598}
+  - component: {fileID: 114366541993121746}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -42,6 +44,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114038708284292598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1204004546059388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f06d04fff02d45fdb56b3e12d079fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items: []
+  InventorySize: 12
+  HealingPotionsAmount: 5
 --- !u!114 &114295569737770512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,7 +81,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad213b30a1557046952d65ad28268e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDelay: 3
   dungeonscript: {fileID: 0}
+--- !u!114 &114366541993121746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1204004546059388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37456aef63fac42719c7f01935825b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114709938935776566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e5a2b4a383a844d951396c4f6b5478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rooms: 8
+  Rooms: 0
   StartingXCoord: 0
   StartingYCoord: 0
   Width: 10
@@ -100,5 +128,4 @@ MonoBehaviour:
   EnemySpawns: []
   PlayerSpawn: {fileID: 1011595723804650, guid: 30dfb06529af0499c8ac28119e9e83a6,
     type: 2}
-  PlayerSpawnPos: {x: 0, y: 0}
-  CaveEntrance: {fileID: 0}
+  LevelExit: {fileID: 1404969779587306, guid: dc3b6d6a5bdaf4529aedffe132971f05, type: 2}

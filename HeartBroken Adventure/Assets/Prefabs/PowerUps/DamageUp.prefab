@@ -51,7 +51,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09034126354c47fab16d1ddc337106b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifier: 0
+  modifier: 10
   TimeToWait: 30
 --- !u!212 &212965817126615384
 SpriteRenderer:
@@ -111,8 +111,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 682166747
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 11b27e940b4644254b8cb4ed9b549691, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
