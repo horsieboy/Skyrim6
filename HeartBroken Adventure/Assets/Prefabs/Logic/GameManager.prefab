@@ -125,7 +125,10 @@ MonoBehaviour:
   - {fileID: 1599165996892450, guid: 6c671ebf9c06142a4a2398f2b94d9026, type: 2}
   - {fileID: 1161401383859624, guid: 4e44e8e38aea14d2d99279279e2e8ab0, type: 2}
   - {fileID: 1491209711849752, guid: e861ac923be164db286ece4066399bc8, type: 2}
-  EnemySpawns: []
+  EnemySpawns:
+  - {fileID: 1479474995175750, guid: ed4ed1e3b1596a24097d71339415e7d7, type: 2}
+  - {fileID: 1283626310265914, guid: 580879b6ee4eb1740ba710bdad64fad6, type: 2}
+  - {fileID: 1730835625183932, guid: 1eeeb7594607e9848b9ebf9bedd87de4, type: 2}
   PlayerSpawn: {fileID: 1011595723804650, guid: 30dfb06529af0499c8ac28119e9e83a6,
     type: 2}
   LevelExit: {fileID: 1404969779587306, guid: dc3b6d6a5bdaf4529aedffe132971f05, type: 2}

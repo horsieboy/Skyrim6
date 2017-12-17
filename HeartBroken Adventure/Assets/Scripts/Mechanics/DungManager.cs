@@ -6,7 +6,8 @@ using UnityEngine;
 public class DungManager : MonoBehaviour {
 
     #region Variables
-	//Надо заполнить данж мобами и предметами
+    //Надо заполнить данж мобами и предметами
+
     enum Direction
     {
         East, South, West, North
@@ -102,15 +103,17 @@ public class DungManager : MonoBehaviour {
 		GameObject exit = Instantiate (LevelExit, ExitPos, Quaternion.identity) as GameObject;
 		exit.transform.SetParent (DungHolder);
 
-//		for (int i = 0; i < RandomAmount; i++) {
-//			Vector2 rndPos = PropBoard [Random.Range (0, PropBoard.Count)];
-//			SpawnObjectAtCoordinates (EnemySpawns, rndPos);
-//		}
-		for (int i = 0; i < RandomAmount; i++) {
+        for (int i = 0; i < RandomAmount; i++)
+        {
+            Vector2 rndPos = PropBoard[Random.Range(0, PropBoard.Count)];
+            SpawnObjectAtCoordinates(EnemySpawns, rndPos);
+        }
+
+        for (int i = 0; i < RandomAmount; i++) {
 			Vector2 rndPos = PropBoard [Random.Range (0, PropBoard.Count)];
 			SpawnObjectAtCoordinates (PropTiles, rndPos);
 		}
-	}
+    }
 
 	void CreateVectorDungeon()
 	{
