@@ -18,8 +18,8 @@ public class ExistentialThings : MonoBehaviour {
 
 	}
 	public virtual void CheckForBeingDead(float health){
-		if(health <= 0)
-		Destroy (gameObject);
+		if (health <= 0)
+			Destroy (gameObject);
 	}
 
 }

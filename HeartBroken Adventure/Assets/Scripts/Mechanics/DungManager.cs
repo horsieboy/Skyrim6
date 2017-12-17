@@ -28,15 +28,21 @@ public class DungManager : MonoBehaviour {
     public GameObject[] FloorTiles;
     public GameObject[] WallTiles;
 	public GameObject[] PropTiles;
+	private int RandomAmount{ get{ return Random.Range (Rooms*2, Rooms*4);}}
 	public GameObject[] EnemySpawns;
+
 	public GameObject PlayerSpawn;
-	public Vector2 PlayerSpawnPos;
-	public GameObject CaveEntrance;
+	private Vector2 PlayerSpawnPos;
+	public GameObject LevelExit;
+	private Vector2 ExitPos;
 
     //Board Stuff
     private Transform DungHolder;
 	private int currentRoom;
+	private int listPos;
+	private int roomBonuses;
 	private List<Vector2> GroundBoard = new List<Vector2>();
+	//private List<Vector2> PropsToInstantiate = new List<Vector2>();
 	private List<Vector2> WallBoard = new List<Vector2>();
 	private List<Vector2> PropBoard = new List<Vector2> ();
 
@@ -51,12 +57,6 @@ public class DungManager : MonoBehaviour {
     #endregion
 
 	#region VectorDungeon
-
-	void FillVectorRoom(){
-	
-
-
-	}
 
 	void GrandCleaning(){
 		TerminateOvelappingTiles (GroundBoard, WallBoard);
@@ -88,7 +88,6 @@ public class DungManager : MonoBehaviour {
 			}
 		}	
 	}
-
 	void InitializeTiles(){
 		foreach (var tile in GroundBoard) {
 			SpawnObjectAtCoordinates (FloorTiles, tile);
@@ -96,9 +95,21 @@ public class DungManager : MonoBehaviour {
 		foreach (var tile in WallBoard) {
 			SpawnObjectAtCoordinates (WallTiles, tile);
 		}
+		
 		GameObject spawner = Instantiate (PlayerSpawn, PlayerSpawnPos, Quaternion.identity) as GameObject;
 		spawner.transform.SetParent (DungHolder);
-		//instantiate props all over the map
+
+		GameObject exit = Instantiate (LevelExit, ExitPos, Quaternion.identity) as GameObject;
+		exit.transform.SetParent (DungHolder);
+
+//		for (int i = 0; i < RandomAmount; i++) {
+//			Vector2 rndPos = PropBoard [Random.Range (0, PropBoard.Count)];
+//			SpawnObjectAtCoordinates (EnemySpawns, rndPos);
+//		}
+		for (int i = 0; i < RandomAmount; i++) {
+			Vector2 rndPos = PropBoard [Random.Range (0, PropBoard.Count)];
+			SpawnObjectAtCoordinates (PropTiles, rndPos);
+		}
 	}
 
 	void CreateVectorDungeon()
@@ -122,10 +133,17 @@ public class DungManager : MonoBehaviour {
 				}
 			}
 		}
-		if (IsFirstRoom == true)
-			PlayerSpawnPos = GroundBoard[Random.Range (0, GroundBoard.Count)];
 		if (currentRoom == GetRooms)
+			ExitPos = PropBoard [Random.Range (PropBoard.Count - 100, PropBoard.Count)];
+			
+		if (currentRoom == GetRooms) 
 			return;
+		
+		if (currentRoom == 0) {
+			PlayerSpawnPos = PropBoard [Random.Range (0, PropBoard.Count)];
+			PropBoard.Remove (PlayerSpawnPos);
+		}
+		
 		CreateVectorTunnel (VectorXbasis, VectorYBasis, Width, Height);
 	}
 				
@@ -201,16 +219,14 @@ public class DungManager : MonoBehaviour {
 
     #endregion
 		
-    public void SetupScene()
+	public void SetupScene(int roomAmount)
     {
+		Rooms = roomAmount + 4;
+
         DungHolder = new GameObject("Dungeon").transform;
-		for (int i = 0; i < GetRooms; i++) {
-			if (i == 0)
-				IsFirstRoom = true;
-			else
-				IsFirstRoom = false;
-			currentRoom++;
+		for (int i = 0; i < Rooms + 1; i++) {
 			CreateVectorDungeon();
+			currentRoom++;
 		}
 		GrandCleaning ();
 		InitializeTiles();

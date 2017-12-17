@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : ExistentialThings {// MonoBehaviour {
+public class PlayerMovement : PlayerStats {
 
 
 	#region Speed Setting
@@ -10,17 +10,17 @@ public class PlayerMovement : ExistentialThings {// MonoBehaviour {
 	private float CurrentSpeed = 0;
 	private float MinSpeed = 0;
 	private float Acceleration = 0.1f;
-	private PlayerStats stats;
+//	private CurrentStats stats;
 	#endregion
 
-	void Start(){
-		stats  = PlayerManager.instance.player.GetComponent<PlayerStats>();
-	}
-
-
+//	void Awake(){
+//		
+//		stats  = PlayerManager.instance.player.GetComponent<CurrentStats>();
+//	}
+		
 	void FixedUpdate () {
 
-		CheckForBeingDead (stats.CurrentHealth);
+		CheckForBeingDead (this.CurrentHealth);
 
 		float SpeedX = Input.GetAxis ("Horizontal");
 
@@ -40,7 +40,4 @@ public class PlayerMovement : ExistentialThings {// MonoBehaviour {
 			Flip ();
 
 	}
-
-
-
 }

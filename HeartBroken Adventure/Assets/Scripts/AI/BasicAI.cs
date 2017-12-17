@@ -12,38 +12,31 @@ public class BasicAI : PlayerStats {
 	private float CurrentSpeed;
 	private float Range = 6f; 
 	private float MinRange = 0.1f;// надо отредактировать под модельку персонажа
-
+	public float AttackSpeed = 1.5f;
 	private Vector2 PrevPosition;
 	private Vector3 playerPos;
-
+	public List<GameObject> ObjectsToDrop;
 	public Canvas ShowHealth;
 	public Image Healthbar;
 
-	public PlayerManager playerManager;
+	public CurrentStats playerStats;
 	#endregion 
 
 	void Start(){
 
-		playerManager = PlayerManager.instance;
+		playerStats = PlayerManager.instance.player.GetComponent<CurrentStats>();
+
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.CompareTag ("Player"))
-			Debug.Log ("Rabotaet");
-			//Attack (playerManager.player.GetComponent<PlayerStats> ());
-			//StartCoroutine( Attack (playerManager.player.GetComponent<PlayerStats> ()));
+			Debug.Log ("Damage has been dealt");
+			//StartCoroutine (Attack (PlayerManager.instance.player.GetComponent<CurrentStats>()));
 	}
 
 	void Update(){
 		
 		CheckForBeingDead (CurrentHealth);
-	
-		if (Input.GetKeyDown (KeyCode.Y))
-			Debug.Log ("PlayerHealth" + playerManager.player.GetComponent<PlayerStats> ().CurrentHealth);
-		
-		if (Input.GetKeyDown (KeyCode.T))
-			TakeDamage (10);
-
 
 	}
 
@@ -54,7 +47,7 @@ public class BasicAI : PlayerStats {
 		if (Vector2.Distance (transform.position, playerPos) <= Range) {
 			if (Vector2.Distance (transform.position, playerPos) < MinRange) {
 				CurrentSpeed = MinSpeed;
-			}
+			}	
 			else {
 				CurrentSpeed = CruisingSpeed;
 				transform.position = Vector2.MoveTowards (transform.position, playerPos, CurrentSpeed * Time.fixedDeltaTime);
@@ -70,19 +63,19 @@ public class BasicAI : PlayerStats {
 
 	}
 
-	public void Attack(PlayerStats targetStats){
-		if (Random.Range (0, 100) <= Agility.GetValue ())
+	public IEnumerator Attack(PlayerStats targetStats){
+		if (Random.Range (0, 100) <= this.Agility.GetValue ())
 			targetStats.TakeDamage (2 * Damage.GetValue ());
 		else {
 			float DamageModifier = Random.Range (0, 50) / 100 + 0.75f;
-			targetStats.TakeDamage (DamageModifier * Damage.GetValue ());
+			targetStats.TakeDamage (DamageModifier * 10f );
 		}
-		//yield return new WaitForSeconds (AttackSpeed.GetValue ());
+		yield return new WaitForSeconds (AttackSpeed);
 	}
 
 	public override void TakeDamage(float damage){
 		if (Random.Range (0, 100) >= Agility.GetValue()){
-			damage -=  Defence.GetValue();
+			damage -= Defence.GetValue();
 			damage = Mathf.Clamp (damage, 0, int.MaxValue);
 			CurrentHealth -= damage;
 			Healthbar.fillAmount = CurrentHealth/MaxHealth.GetValue();
@@ -91,5 +84,16 @@ public class BasicAI : PlayerStats {
 	}
 
 
+	public override void CheckForBeingDead(float health){
+		if (health <= 0) {
+			if (Random.Range (0, 100) <= 15) {
+				GameObject drop = ObjectsToDrop [Random.Range (0, ObjectsToDrop.Count)];
+				GameObject instance = Instantiate (drop, transform.position, Quaternion.identity) as GameObject;
+				instance.transform.SetPositionAndRotation (transform.position, Quaternion.identity);
+			}
 
+			Destroy (gameObject);
+		}
+		
+	}
 }
